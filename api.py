@@ -1,5 +1,9 @@
+# flask files
 from flask import Flask, request
 from flask_restful import Resource, Api, reqparse
+
+# local files
+from scraper import web_scraper
 
 app = Flask(__name__)
 api = Api(app)
