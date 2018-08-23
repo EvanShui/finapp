@@ -1,5 +1,5 @@
 # flask files
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_restful import Resource, Api, reqparse
 
 # local files
@@ -8,7 +8,10 @@ from scraper import web_scraper
 app = Flask(__name__)
 api = Api(app)
 parser = reqparse.RequestParser()
+parser.add_argument('dd', type=int)
 parser.add_argument('ticker', type=str)
+parser.add_argument('mm', type=int)
+parser.add_argument('yy', type=int)
 todos = {1: 'hello'}
 
 class RetTicker(Resource):
@@ -22,14 +25,28 @@ class RetTicker(Resource):
         return {ticker: '{}'.format(func)}
 
 class ScrapeTick(Resource):
-    def scrape(self, arg):
-        return('scraping for {}'.format(arg))
+    def scrape(self, ticker, day, month, year):
+        articles = web_scraper(ticker, day, month, year)
+        return (articles)
+
     
     def get(self):
         args = parser.parse_args()
         ticker = args['ticker']
-        articles = self.scrape(ticker)
-        return {'article list': articles}
+        day = args['dd']
+        month = args['mm']
+        year = args['yy']
+        articles = self.scrape(ticker, day, month, year)
+        if articles:
+            return {
+                'status': 'OK',
+                'article list': articles
+                }
+        else:
+            return {
+                'status': 'Error',
+                'msg': 'unable to retrieve list'
+            }
 
 class GraphTick(Resource):
     def get_graph(self, arg):
