@@ -29,7 +29,6 @@ class ScrapeTick(Resource):
         articles = web_scraper(ticker, day, month, year)
         return (articles)
 
-    
     def get(self):
         args = parser.parse_args()
         ticker = args['ticker']

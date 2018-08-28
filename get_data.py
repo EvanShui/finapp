@@ -1,5 +1,6 @@
 from alpha_vantage.timeseries import TimeSeries
 import constants
+import datetime
 
 def get_data(time, tick):
 
@@ -11,8 +12,15 @@ def get_data(time, tick):
     elif time == constants.time['1m']:
         data,meta_data = ts.get_daily(symbol=tick, outputsize='compact')
     else:
-        data, meta_data = ts.get_daily(symbol=stock_ticker, outputsize='full')
+        data, meta_data = ts.get_daily(symbol=tick, outputsize='full')
+    data = data[::-1]
+    most_recent_date = datetime.datetime.strptime(data.iloc[0].name, '%Y-%m-%d %H:%M:%S')
+    current_date = datetime.datetime.now()
+
+    print(most_recent_date)
+    print(current_date)
+    print("comparison: ", most_recent_date < current_date)
     return data,meta_data
 
 if __name__ == '__main__':
-    print(get_data(constants.time['1d'], 'NFLX'))
+    (get_data(constants.time['1d'], 'NFLX'))
