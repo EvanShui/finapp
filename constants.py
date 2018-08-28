@@ -8,6 +8,9 @@ time = {
     '1m': 3,  # 1 day intervals (need ~30 points of data)
     '6m': 4,  # 1 day intervals (need ~180 points of data)
     'ytd': 5, # 1 day intervals (varies, hard stop at Jan)
-    '5y': 6,  # 1 day interavls (need ~1825 points of data )
-    'max': 7  # 1 day intervals (all lol)
+    '1y': 6,  # 1 day intervals (~365 points of data)
+    '5y': 7,  # 1 day interavls (need ~1825 points of data )
+    'max': 8  # 1 day intervals (all lol)
 }
+
+yahoo_bio_url = "https://finance.yahoo.com/quote/NFLX?p=NFLX&.tsrc=fin-srch"

@@ -4,6 +4,7 @@ from flask_restful import Resource, Api, reqparse
 
 # local files
 from scraper import web_scraper
+from get_data import get_processed_data
 
 app = Flask(__name__)
 api = Api(app)
@@ -12,6 +13,7 @@ parser.add_argument('dd', type=int)
 parser.add_argument('ticker', type=str)
 parser.add_argument('mm', type=int)
 parser.add_argument('yy', type=int)
+parser.add_argument('time', type=str)
 todos = {1: 'hello'}
 
 class RetTicker(Resource):
@@ -47,25 +49,17 @@ class ScrapeTick(Resource):
                 'msg': 'unable to retrieve list'
             }
 
-class GraphTick(Resource):
-    def get_graph(self, arg):
-        return('graph data for {}'.format(arg))
+class DataTick(Resource):
+    def get_data(self, ticker, time):
+        data = get_processed_data(ticker, time)
+        return data
     
     def get(self):
         args = parser.parse_args()
         ticker = args['ticker']
-        graph_data = self.get_graph(ticker)
+        time = args['time']
+        graph_data = self.get_data(ticker, time)
         return {'graph data': graph_data}
-
-class StatsTick(Resource):
-    def get_stats(self, arg):
-        return('statistics for {}'.format(arg))
-    
-    def get(self):
-        args = parser.parse_args()
-        ticker = args['ticker']
-        stats = self.get_stats(ticker)
-        return {'statistic': stats}
 
 class BioTick(Resource):
     def get_bio(self, arg):
@@ -79,10 +73,8 @@ class BioTick(Resource):
 
 api.add_resource(RetTicker, '/Ticker')
 api.add_resource(ScrapeTick, '/Scrape')
-api.add_resource(GraphTick, '/Graph')
-api.add_resource(StatsTick, '/Stats')
+api.add_resource(DataTick, '/Data')
 api.add_resource(BioTick, '/Bio')
-
 
 if __name__ == '__main__':
     app.run(debug=True)
