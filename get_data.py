@@ -9,8 +9,7 @@ import re
 def read_json():
     with open('data.json', 'r') as infile:
         data = json.load(infile)
-        df = pd.read_json(data)
-    df = df[::-1]
+        df = pd.read_json(data, orient='table')
     return df
 
 def get_data(time, tick):
@@ -29,14 +28,13 @@ def get_data(time, tick):
 
 def year_to_date(df):
     most_recent_date = df.iloc[0, :].name
-    print(most_recent_date.year)
     print(most_recent_date)
     current_year = str(most_recent_date.year)
     val_lst = df.index.values
     for index, date in enumerate(val_lst):
-        date = pd.to_datetime(str(date))
-        date = date.strftime('%Y-%m-%d %H:%M:%S')
+        date = str(date)[:10]
         if not (re.findall(current_year, date)):
+            print(index)
             break
     return df.iloc[:index, :]    
    
@@ -52,7 +50,6 @@ def splice_data(df, time):
         df = df.iloc[:180, :]
     elif time==constants.time['ytd']:
         df = year_to_date(df)
-            
         '''
         beginning_date = datetime.datetime.strptime(beginning_date, '%Y-%m-%d %H:%M:%S')
         print(datetime.datetime.now() - beginning_date)
@@ -64,6 +61,7 @@ def splice_data(df, time):
         df = df.iloc[:1800, :]
     else:
         df = df
+    df.index = pd.to_datetime(df.index)
     return df
 
 def process_data(df):
@@ -79,12 +77,12 @@ def process_data(df):
 
 def get_processed_data(time, tick):
     df = read_json()
-    print(df)
     # df = get_data(time, tick)
-    df = splice_data(df, time)
-    meta_data = process_data(df) 
-    return df, meta_data
+    ret_df = splice_data(df, time)
+    meta_data = process_data(ret_df) 
+    ret_df = (ret_df['4. close'])
+    return {'close-data': ret_df, 'meta-data': meta_data}
 
 if __name__ == '__main__':
-    print(get_processed_data(constants.time['ytd'], 'NFLX'))
+    (get_processed_data(constants.time['ytd'], 'NFLX'))
     # print(get_data(constants.time['1d'], 'NFLX'))

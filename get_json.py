@@ -19,8 +19,7 @@ def get_data(time, tick):
 
 if __name__ == '__main__':
     df = (get_data(constants.time['1y'], 'MSFT'))
-    df = df[0].to_json()
-    meta_data = df[1].to_json()
+    df = df[0].to_json(orient='table', date_format="iso")
     with open('data.json', 'w') as outfile:
         json.dump(df, outfile)
 
