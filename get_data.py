@@ -62,6 +62,7 @@ def splice_data(df, time):
     else:
         df = df
     df.index = pd.to_datetime(df.index)
+    df = df[::-1]
     return df
 
 def process_data(df):
@@ -81,7 +82,7 @@ def get_processed_data(time, tick):
     ret_df = splice_data(df, time)
     meta_data = process_data(ret_df) 
     ret_df = (ret_df['4. close'])
-    return {'close-data': ret_df, 'meta-data': meta_data}
+    return [ret_df, meta_data]
 
 if __name__ == '__main__':
     (get_processed_data(constants.time['ytd'], 'NFLX'))

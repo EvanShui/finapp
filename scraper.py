@@ -22,10 +22,10 @@ def web_scraper(tick, day, month, year):
 
 def return_article_info(article, date):
     ret = {}
-    ret['time'] = date.contents[0].contents[0]
+    ret['time'] = str(date.contents[0].contents[0])
     ret['author'] = re.findall(r'(?<=\|\ )(.*)', date.contents[1])[0].rstrip()
-    ret['article_bio'] = article.a.contents[0]
-    ret['article_link'] = article.a['href']
+    ret['article_bio'] = str(article.a.contents[0])
+    ret['article_link'] = str(article.a['href'])
     return ret
 
 

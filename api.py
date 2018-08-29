@@ -16,8 +16,8 @@ app = Flask(__name__)
 api = Api(app)
 CORS(app, origins="http://localhost:3000", allow_headers=['Access-Control-Allow-Credentials', 'Authorization', 'Content-type'])
 parser = reqparse.RequestParser()
-parser.add_argument('dd', type=int)
 parser.add_argument('ticker', type=str)
+parser.add_argument('dd', type=int)
 parser.add_argument('mm', type=int)
 parser.add_argument('yy', type=int)
 parser.add_argument('time', type=str)
@@ -61,7 +61,7 @@ class DataTick(Resource):
         print(ticker, time)
         data = get_processed_data(time, ticker)
         print("-------------")
-        data['close-data'].index = (pd.to_datetime(data['close-data'].index))
+        data[0].index = (pd.to_datetime(data[0].index))
         print("-------------")
         return data
     
@@ -70,11 +70,12 @@ class DataTick(Resource):
         ticker = args['ticker']
         time = args['time']
         graph_data = self.get_data(ticker, constants.time[time])
-        graph_data['close-data'] = graph_data['close-data'].to_json()
+        graph_data[0] = graph_data[0].to_json()
         if graph_data: 
             return {
                 'status': 'Ok',
-                'data': graph_data
+                'data': graph_data[0],
+                'meta_data': graph_data[1]
             }
         else:
             return {
