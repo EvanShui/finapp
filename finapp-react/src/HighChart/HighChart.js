@@ -28,17 +28,15 @@ class HighChart extends Component {
                 var json_data = JSON.parse(data.data);
                 for (var key in JSON.parse(data.data)) {
                     var date = new Date(parseInt(key, 10) + 28800000);
-                    console.log(date)
-                    console.log(date.getMonth())
                     temp_lst.push([
                         date,
                         json_data[key]
                     ]);
                 };
                 return temp_lst;
-            }).then(data => {
-                this.chart.series[0].setData(temp_lst);
-            })
+            }).then( data =>{
+                this.chart.series[0].setData(data);
+            });
     }
 
     render() {

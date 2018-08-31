@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 // import * as Highcharts from 'highcharts'
 import HighChart from './HighChart/HighChart'
-import Articles from './Articles/Articles'
+import ArticleList from './ArticleList/ArticleList'
 
 class App extends Component {
   state = {
@@ -29,7 +29,7 @@ class App extends Component {
     return (
       <div>
         <HighChart options={this.state.options} />
-        <Articles/>
+        <ArticleList/>
       </div>
     )
   }

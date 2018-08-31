@@ -48,7 +48,7 @@ class ScrapeTick(Resource):
         if articles:
             return {
                 'status': 'OK',
-                'article list': articles
+                'articleList': articles
                 }
         else:
             return {
