@@ -1,0 +1,8 @@
+.articleBox {
+    height:400px;
+    width:300px;
+    overflow: auto;
+    background-color: grey;
+    position: relative;
+    left: 10px;
+}

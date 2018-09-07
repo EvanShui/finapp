@@ -4,9 +4,12 @@ import './Article.css'
 
 const finArticle = (props) => {
     return (
-        <div class='post'>
+        <div className='post'>
             <a href={props.link}>
-                <h1>{props.title} by {props.author}</h1>
+                <h1>{props.title} </h1>
+                <div>
+                    by {props.author}
+                </div>
                 <div>
                     {props.date}
                 </div>

@@ -26,3 +26,15 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.column {
+  float: left;
+}
+
+.column-graph {
+  width: 70%;
+}
+
+.column-article {
+  width: 30%;
+}

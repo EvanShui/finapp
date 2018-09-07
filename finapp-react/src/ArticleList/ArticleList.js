@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import FinArticle from './Article/Article'
+import FinArticle from './Article/Article';
+import './ArticleList.css';
 
 class ArticleList extends Component {
 
@@ -41,9 +42,11 @@ class ArticleList extends Component {
             author={article.author}
             />;
         })
-        return (<div>
-                Articles
-                {posts}
+        return (
+            <div>
+                <div className='articleBox'>
+                    {posts}
+                </div>
             </div>
         );
     }

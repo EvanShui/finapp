@@ -28,8 +28,16 @@ class App extends Component {
   render() {
     return (
       <div>
-        <HighChart options={this.state.options} />
-        <ArticleList/>
+        <div className='App-header'>
+        </div>
+        <div className="body">
+          <div className="column column-graph">
+            <HighChart options={this.state.options} />
+          </div>
+          <div className="column column-article">
+            <ArticleList/>
+          </div>
+        </div>
       </div>
     )
   }

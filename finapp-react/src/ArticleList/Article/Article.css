@@ -1,3 +1,22 @@
 .post {
     border: 1px solid black;
+    font-size: 10px;
+    padding: 10px;
+}
+
+a:link {
+    color: black;
+}
+
+a:visited {
+    color: black;
+}
+
+a.hover {
+    color:black;
+
+}
+
+a.active {
+    color: black;
 }
